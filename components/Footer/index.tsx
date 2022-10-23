@@ -1,0 +1,1 @@
+export { SimpleTextFooter } from "./SimpleTextFooter";
