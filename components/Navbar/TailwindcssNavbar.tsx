@@ -1,4 +1,4 @@
-import { Navbar, createStyles } from "@mantine/core";
+import { Navbar } from "@mantine/core";
 import { useRouter } from "next/router";
 import React from "react";
 
@@ -15,9 +15,14 @@ export type NavLinkGroups = {
 type Props = {
   linkGroups: NavLinkGroups;
   selected?: string;
+  title?: string;
 };
 
-export const TailwindcssNavbar = ({ linkGroups, selected = "" }: Props) => {
+export const TailwindcssNavbar = ({
+  linkGroups,
+  selected = "",
+  title,
+}: Props) => {
   const router = useRouter();
 
   /** 导航选择事件 */
@@ -26,10 +31,8 @@ export const TailwindcssNavbar = ({ linkGroups, selected = "" }: Props) => {
   };
 
   const navMenu = linkGroups.map((group, i) => (
-    <div key={i} className="ml-2">
-      <div className="mt-8 text-slate-900 font-semibold mb-2">
-        {group.groupName}
-      </div>
+    <div key={i} className="ml-2 mt-8 first:mt-0 first:sm:mt-4">
+      <div className="text-slate-900 font-semibold mb-2">{group.groupName}</div>
       <div className="border-solid border-0 border-l border-slate-200">
         {group.children.map((link, i) => (
           <div
@@ -63,9 +66,11 @@ export const TailwindcssNavbar = ({ linkGroups, selected = "" }: Props) => {
         width={{ sm: 250 }}
         p="md"
       >
-        <Navbar.Section className="text-center font-bold">
-          Clash Configs Manager
-        </Navbar.Section>
+        {title ? (
+          <Navbar.Section className="pl-2 font-bold max-sm:hidden">
+            {title}
+          </Navbar.Section>
+        ) : null}
         <Navbar.Section className="text-sm">{navMenu}</Navbar.Section>
       </Navbar>
     </>
