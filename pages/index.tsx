@@ -1,9 +1,9 @@
-import type { NextPage } from 'next'
-import Head from 'next/head'
-import styles from '../styles/Home.module.css'
+import type { NextPage } from "next";
+import Head from "next/head";
+import styles from "../styles/Home.module.css";
 
-import { Input } from '@mantine/core'
-import { IconKey } from '@tabler/icons'
+import { Input, Button } from "@mantine/core";
+import { IconKey, IconThumbUp } from "@tabler/icons";
 
 const Home: NextPage = () => {
   return (
@@ -15,10 +15,22 @@ const Home: NextPage = () => {
       </Head>
 
       <main className={styles.main}>
-        <Input icon={<IconKey size={16} />} placeholder="设置或输入您的密钥"/>
+        <div className="flex flex-col sm:flex-row gap-2">
+          <Input
+            icon={<IconKey size={16} />}
+            placeholder="设置或输入您的密钥"
+            rightSection={
+              <Button size="xs" variant="light">
+                生成 UUID
+              </Button>
+            }
+            rightSectionWidth={94}
+          />
+          <Button leftIcon={<IconThumbUp />}>进入 Clash 配置管理</Button>
+        </div>
       </main>
     </div>
-  )
-}
+  );
+};
 
-export default Home
+export default Home;
