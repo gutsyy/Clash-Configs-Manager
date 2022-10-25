@@ -23,9 +23,11 @@ export const NavFooterLayout = (props: Props) => {
 
   return (
     <div className="h-screen flex flex-col">
-      <div className="flex w-full font-mono flex-1">
+      <div className="flex w-full font-mono flex-1 max-sm:flex-col">
         <div className={`${navbarClassName}`}>{navbar}</div>
-        <div className={`${contentClassName} flex-1 p-4`}>{children}</div>
+        <div className={`${contentClassName} flex-1 p-4 max-sm:p-2`}>
+          {children}
+        </div>
       </div>
       <div>{footer}</div>
     </div>
