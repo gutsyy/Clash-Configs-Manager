@@ -4,8 +4,31 @@ import styles from "../styles/Home.module.css";
 
 import { Input, Button } from "@mantine/core";
 import { IconKey, IconThumbUp } from "@tabler/icons";
+import { useForm } from "@mantine/form";
+
+import { v4 as uuidv4 } from "uuid";
+import { useRouter } from "next/router";
 
 const Home: NextPage = () => {
+  const router = useRouter();
+
+  const form = useForm({
+    initialValues: {
+      id: "",
+    },
+  });
+
+  /** 跳转 **/
+  const redirect = (values: { id: string }) => {
+    router.push(`/${values.id}/servers`);
+  };
+
+  /** 生成uuid（切割uuid控制长度） */
+  const onUseUuid = () => {
+    form.setFieldValue("id", uuidv4().split("-")[0]);
+    // TODO 判断是否已有配置文件
+  };
+
   return (
     <div className={styles.container}>
       <Head>
@@ -15,19 +38,25 @@ const Home: NextPage = () => {
       </Head>
 
       <main className={styles.main}>
-        <div className="flex flex-col sm:flex-row gap-2">
+        <form
+          className="flex flex-col sm:flex-row gap-2"
+          onSubmit={form.onSubmit((values) => redirect(values))}
+        >
           <Input
             icon={<IconKey size={16} />}
             placeholder="设置或输入您的密钥"
             rightSection={
-              <Button size="xs" variant="light">
+              <Button size="xs" variant="light" onClick={onUseUuid}>
                 生成 UUID
               </Button>
             }
             rightSectionWidth={94}
+            {...form.getInputProps("id")}
           />
-          <Button leftIcon={<IconThumbUp />}>进入 Clash 配置管理</Button>
-        </div>
+          <Button type="submit" leftIcon={<IconThumbUp />}>
+            进入 Clash 配置管理
+          </Button>
+        </form>
       </main>
     </div>
   );
